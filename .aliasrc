@@ -1,0 +1,54 @@
+alias gc='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+
+#Documents or url access
+alias editAlias='nvim ~/.aliasrc'
+alias editPrompt='nvim ~/.config/starship.toml'
+alias editZsh='nvim ~/.zshrc'
+alias editBash='nvim ~/.bashrc'
+alias editEnv='nvim ~/.zshenv'
+alias showAlias='cat ~/.aliasrc'
+alias toClipboard='xsel -b <'
+alias op='xdg-open'
+alias neofetch='neofetch | lolcat'
+alias history='history 1'
+alias fh='history | grep'
+
+#replacements
+alias ls='exa'
+alias cat='bat'
+
+#Other
+alias publicIP='dig +short myip.opendns.com @resolver1.opendns.com'
+alias clear='clear && welc "Welcome Gus"'
+alias pycharmpwd='pycharm . > /dev/null 2>&1 & disown'
+alias emacs="emacsclient -c -a 'emacs'"
+alias gc="/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
+ex ()
+{
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjf $1   ;;
+      *.tar.gz)    tar xf $1   ;;
+      *.tar.xz)    tar xJf $1   ;;
+      *.bz2)       bunzip2 $1   ;;
+      *.rar)       unrar x $1     ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xf $1    ;;
+      *.tbz2)      tar xjf $1   ;;
+      *.tgz)       tar xzf $1   ;;
+      *.zip)       unzip $1     ;;
+      *.Z)         uncompress $1;;
+      *.7z)        7z x $1      ;;
+      *)           echo "'$1' cannot be extracted via ex()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
+
+
+welc (){
+	figlet -f standard "$1" | lolcat -f
+}
+
