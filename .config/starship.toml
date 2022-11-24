@@ -1,0 +1,38 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+right_format = """[($git_status$git_branch)](blue)$git_commit"""
+
+
+# Inserts a blank line between shell prompts
+add_newline = false
+
+[character] # 
+success_symbol = "[♠](bold green)" # The "success_symbol" segment is being set to "➜" with the color "bold green"
+error_symbol = "[♦](bold red)" 
+
+[package]
+disabled = true
+
+
+[directory]
+truncation_length = 8
+truncation_symbol = "…/"
+truncate_to_repo = false
+style = "yellow"
+read_only = " 🔒"
+read_only_style = "fg:#ffb86c"
+home_symbol = "~"
+format = "[$path]($style) [$read_only]($read_only_style) "
+
+[git_metrics]
+disabled = false
+
+[git_status]
+ahead = "⇡${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+behind = "⇣${count}"
+modified = '[\(!$count\)](red)'
+staged = '[\(+$count\)](yellow)'
+untracked = '[\(?$count\)](blue)'
+#style = 'bold gray'
