@@ -4,10 +4,10 @@ import os
 
 @hook.subscribe.startup_once
 def autostart():
-    home = os.path.expanduser('~/.config/qtile/autostart.sh')
-    subprocess.call([home])
+    script = os.path.expanduser('~/.config/qtile/autostart.sh')
+    subprocess.call([script])
 
 @hook.subscribe.startup
 def screen():
-    home = os.path.expanduser('~/.config/qtile/screen.sh')
-    subprocess.call([home])
+    script = os.path.expanduser('~/.config/qtile/screen.sh')
+    subprocess.call([script])

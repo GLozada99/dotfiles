@@ -1,168 +1,28 @@
 from libqtile import bar
+
+from modules.settings.utils import get_monitor_number
 from .widgets import *
 from libqtile.config import Screen
-from modules.keys import terminal
 import os
 
-screens = [
-    Screen(
+def generate_screen(principal: bool = False):
+    return Screen(
         top=bar.Bar(
-            [   widget.Sep(padding=3, linewidth=0, background="#2f343f"),
-                widget.Image(filename='~/.config/qtile/logo.svg', margin=3, background="#2f343f", mouse_callbacks={'Button1': lambda: qtile.cmd_spawn("rofi -show combi")}),
-                widget.Sep(padding=4, linewidth=0, background="#2f343f"), 
-                widget.GroupBox(
-                                highlight_method='line',
-                                this_screen_border="#5294e2",
-                                this_current_screen_border="#5294e2",
-                                active="#ffffff",
-                                inactive="#848e96",
-                                background="#2f343f"),
-                widget.TextBox(
-                       text = '',
-                       padding = 0,
-                       fontsize = 28,
-                       foreground='#2f343f'
-                       ),    
-                widget.Prompt(),
-                widget.Spacer(length=5),
-                widget.WindowName(foreground='#99c0de',fmt='{}'),
-                widget.Chord(
-                    chords_colors={
-                        'launch': ("#ff0000", "#ffffff"),
-                    },
-                    name_transform=lambda name: name.upper(),
-                ),
-                widget.CurrentLayoutIcon(scale=0.75),
-                widget.CheckUpdates(
-                    update_interval=1800,
-                    distro="Arch_yay",
-                    display_format="{updates} Updates",
-                    foreground="#ffffff",
-                    mouse_callbacks={
-                        'Button1':
-                        lambda: qtile.cmd_spawn(terminal + ' -e yay -Syu')
-                    },
-                    background="#2f343f"),
-                widget.Systray(icon_size = 20),
-                widget.TextBox(
-                       text = '',
-                       padding = 0,
-                       fontsize = 28,
-                       foreground='#2f343f'
-                       ), 
-                volume,
-                widget.TextBox(                                                                    
-                       text = '',
-                       padding = 0,
-                       fontsize = 28,
-                       foreground='#2f343f',
-                       ),   
-                widget.TextBox(
-                       text = '',
-                       padding = 0,
-                       fontsize = 28,
-                       foreground='#2f343f'
-                       ),    
-                widget.Clock(format=' %Y-%m-%d %a %I:%M %p',
-                             background="#2f343f",
-                             foreground='#9bd689'),
-                                                widget.TextBox(                                                
-                                                
-                       text = '',
-                       padding = 0,
-                       fontsize = 28,
-                       foreground='#2f343f',
-                       ),   
-                widget.TextBox(
-                    text='',
-                    mouse_callbacks= {
-                        'Button1':
-                        lambda: qtile.cmd_spawn(os.path.expanduser('~/.config/rofi/powermenu.sh'))
-                    },
-                    foreground='#e39378'
-                )
-                
-            ],
-            30,  # height in px
-            background="#404552"  # background color
-        ), ),
-    Screen(
-        top=bar.Bar(
-            [   widget.Sep(padding=3, linewidth=0, background="#2f343f"),
-                widget.Image(filename='~/.config/qtile/logo.svg', margin=3, background="#2f343f", mouse_callbacks={'Button1': lambda: qtile.cmd_spawn("rofi -show combi")}),
-                widget.Sep(padding=4, linewidth=0, background="#2f343f"), 
-                widget.GroupBox(
-                                highlight_method='line',
-                                this_screen_border="#5294e2",
-                                this_current_screen_border="#5294e2",
-                                active="#ffffff",
-                                inactive="#848e96",
-                                background="#2f343f"),
-                widget.TextBox(
-                       text = '',
-                       padding = 0,
-                       fontsize = 28,
-                       foreground='#2f343f'
-                       ),    
-                widget.Spacer(length=5),
-                widget.WindowName(foreground='#99c0de',fmt='{}'),
-                widget.Chord(
-                    chords_colors={
-                        'launch': ("#ff0000", "#ffffff"),
-                    },
-                    name_transform=lambda name: name.upper(),
-                ),
-                widget.CurrentLayoutIcon(scale=0.75),
-                widget.CheckUpdates(
-                    update_interval=1800,
-                    distro="Arch_yay",
-                    display_format="{updates} Updates",
-                    foreground="#ffffff",
-                    mouse_callbacks={
-                        'Button1':
-                        lambda: qtile.cmd_spawn(terminal + ' -e yay -Syu')
-                    },
-                    background="#2f343f"),
-                widget.TextBox(
-                       text = '',
-                       padding = 0,
-                       fontsize = 28,
-                       foreground='#2f343f'
-                       ), 
-                volume,
-                widget.TextBox(                                                                    
-                       text = '',
-                       padding = 0,
-                       fontsize = 28,
-                       foreground='#2f343f',
-                       ),   
-                widget.TextBox(
-                       text = '',
-                       padding = 0,
-                       fontsize = 28,
-                       foreground='#2f343f'
-                       ),    
-                widget.Clock(format=' %Y-%m-%d %a %I:%M %p',
-                             background="#2f343f",
-                             foreground='#9bd689'),
-                                                widget.TextBox(                                                
-                                                
-                       text = '',
-                       padding = 0,
-                       fontsize = 28,
-                       foreground='#2f343f',
-                       ),   
-                widget.TextBox(
-                    text='',
-                    mouse_callbacks= {
-                        'Button1':
-                        lambda: qtile.cmd_spawn(os.path.expanduser('~/.config/rofi/powermenu.sh'))
-                    },
-                    foreground='#e39378'
-                )
-                
-            ],
-            30,  # height in px
-            background="#404552"  # background color
-        ), ),
-]
+            base_widgets if not principal else systray_widgets, 30,
+            margin=[8, 0, 0, 0],
+            opacity=0.9,
+            background="#404552"
+            )
+        )
+
+def generate_screens(principal_position: int = 0):
+    screens = []
+    extra_monitors = get_monitor_number() - 1
+    if extra_monitors > 0:
+        screens.extend([generate_screen() for _ in range(extra_monitors)])
+
+    position = min(principal_position, len(screens))
+    screens.insert(position, generate_screen(principal=True))
+    return screens
+
+screens = generate_screens(1)

@@ -1,5 +1,8 @@
+import os
 from libqtile import widget
 from libqtile import qtile
+
+from modules.settings.apps import Apps
 
 colors = [
 	      ["#282c34", "#282c34"], # panel background
@@ -55,3 +58,76 @@ volume = MyVolume(
     background='#2f343f',
     mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn("pavucontrol")}
 )
+
+base_widgets = [
+    widget.Sep(padding=3, linewidth=0, background="#2f343f"),
+    widget.Image(
+        filename='~/.config/qtile/logo.png', margin=3,
+        background="#2f343f", 
+        mouse_callbacks={
+            'Button1': lambda: qtile.cmd_spawn("rofi -show combi")
+        }
+    ),
+    widget.Sep(padding=4, linewidth=0, background="#2f343f"), 
+    widget.GroupBox(
+        highlight_method='line',
+        this_screen_border="#5294e2",
+        this_current_screen_border="#5294e2",
+        active="#ffffff",
+        inactive="#848e96",
+        background="#2f343f"
+    ),
+    widget.TextBox(
+        text = '',
+        padding = 0,
+        fontsize = 28,
+        foreground='#2f343f'
+    ),
+    widget.Prompt(),
+    widget.Spacer(length=5),
+    widget.WindowName(foreground='#99c0de',fmt='{}'),
+    widget.Chord(
+        name_transform=lambda name: name.upper(),
+        chords_colors={'launch': ("#ff0000", "#ffffff")}
+    ),
+    widget.CurrentLayoutIcon(scale=0.75),
+    widget.CheckUpdates(
+        update_interval=1800, distro="Arch_yay",
+        display_format="{updates} Updates", foreground="#ffffff",
+        background="#2f343f",
+        mouse_callbacks={'Button1':
+            lambda: qtile.cmd_spawn(Apps.TERMINAL + ' -e yay -Syu')}
+    ),
+    widget.TextBox(
+        text = '', padding = 0, 
+        fontsize = 28, foreground='#2f343f'
+    ),
+    volume,
+    widget.TextBox(
+        text = '', padding = 0,
+        fontsize = 28, foreground='#2f343f'
+    ),
+    widget.TextBox(
+        text = '', padding = 0,
+        fontsize = 28, foreground='#2f343f'
+    ),
+    widget.Clock(
+        format=' %Y-%m-%d %a %I:%M %p',
+        background="#2f343f", foreground='#9bd689'
+    ),
+    widget.TextBox(
+        text = '', padding = 0,
+        fontsize = 28, foreground='#2f343f'
+    ),
+    widget.TextBox(
+        text='', foreground='#e39378',
+        mouse_callbacks={'Button1': lambda: 
+            qtile.cmd_spawn(
+                os.path.expanduser(
+                    '~/.config/rofi/powermenu.sh'))}
+    ),
+]
+
+systray_position = 11
+systray_widgets =  base_widgets.copy()
+systray_widgets.insert(11, widget.Systray(icon_size = 20))

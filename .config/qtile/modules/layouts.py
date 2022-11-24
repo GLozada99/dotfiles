@@ -2,21 +2,10 @@ from libqtile import layout
 from libqtile.config import Match
 
 layouts = [
-    layout.MonadTall(margin=8, border_focus='#5294e2',
-                     border_normal='#2c5380'),
-    #layout.Columns(border_focus_stack='#d75f5f'),
-    layout.Max(),
-    # Try more layouts by unleashing below layouts.
-    # layout.Stack(num_stacks=2),
-    # layout.Bsp(),
-    # layout.Matrix(),
-    # layout.MonadTall(),
-    # layout.MonadWide(),
-    # layout.RatioTile(),
-    # layout.Tile(),
-    # layout.TreeTab(),
-    # layout.VerticalTile(),
-    # layout.Zoomy(),
+    layout.Max(margin=8, border_focus='#5294e2',
+               border_normal='#2c5380', border_width=5),
+    layout.Columns(margin=8, border_focus='#5294e2', border_on_single=True,
+                   border_normal='#2c5380', border_width=5),
 ]
 
 floating_layout = layout.Floating(float_rules=[
