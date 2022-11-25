@@ -8,7 +8,7 @@ import os
 def generate_screen(principal: bool = False):
     return Screen(
         top=bar.Bar(
-            base_widgets if not principal else systray_widgets, 30,
+            get_base_widgets() if not principal else get_systray_widgets(), 30,
             margin=[8, 0, 0, 0],
             opacity=0.9,
             background="#404552"
