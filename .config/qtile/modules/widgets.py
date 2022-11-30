@@ -56,7 +56,8 @@ volume = MyVolume(
     font='Font Awesome 5 Free',
     foreground=colors[4],
     background='#2f343f',
-    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn("pavucontrol")}
+    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn("pavucontrol"),
+                       'Button3': lambda: qtile.cmd_spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle"),}
 )
 
 def get_base_widgets():

@@ -70,9 +70,12 @@ keys = [
         lazy.spawncmd(),
         desc="Spawn a command using a prompt widget"),
     
-    Key([], "XF86AudioRaiseVolume",lazy.spawn("amixer set Master 3%+")),
-    Key([], "XF86AudioLowerVolume",lazy.spawn("amixer set Master 3%-")),
-    Key([], "XF86AudioMute",lazy.spawn("amixer set Master toggle")),
+    Key([], Keys.VOL_UP, lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -10%")),
+    Key([], Keys.VOL_DOWN, lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -10%")),
+    Key([], Keys.TOGGLE_MUTE, lazy.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")),
+    # Key([], Keys.VOL_UP, lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -10%")),
+    # Key([], Keys.VOL_DOWN, lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -10%")),
+    # Key([], Keys.TOGGLE_MUTE, lazy.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")),
     Key([Keys.MOD], "Print", lazy.spawn(Apps.SCREENSHOT), desc="Take screenshot"),
     Key([Keys.ALT], "period", lazy.next_screen(), desc="Cycle monitor focus"),
 ] + focus + move + grow + spawn
