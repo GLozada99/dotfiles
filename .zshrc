@@ -32,4 +32,13 @@ plugins=(git z sudo zsh-completions)
 eval "$(starship init zsh)"
 # End of lines added by compinstall
 
+my-backward-delete-word() {
+    local WORDCHARS=${WORDCHARS/\//}
+    zle backward-delete-word
+}
+zle -N my-backward-delete-word
+bindkey '^W' my-backward-delete-word
+
+
+
 welc "Welcome Gus"
