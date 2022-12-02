@@ -4,8 +4,6 @@ from modules.settings.apps import Apps
 
 from modules.settings.keys import Keys
 
-terminal = "alacritty"
-
 focus = [
     Key([Keys.MOD], "Left", lazy.layout.left(), desc="Move Focus Left"),
     Key([Keys.MOD], "Right", lazy.layout.right(), desc="Move Focus Right"),
@@ -55,9 +53,7 @@ spawn = [
 ]
 
 keys = [
-    Key([Keys.ALT],
-        "Tab",
-        lazy.layout.next(),
+    Key([Keys.ALT], "Tab", lazy.layout.next(),
         desc="Move window focus to other window"),
     Key([Keys.MOD], "r", lazy.spawn("rofi -show combi"), desc="spawn rofi"),
     Key([Keys.MOD], "q", lazy.window.kill(), desc="Kill focused window"),
@@ -65,17 +61,14 @@ keys = [
     Key([Keys.MOD, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([Keys.MOD], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([Keys.MOD, "shift"], "space", lazy.layout.flip()),
-    Key([Keys.MOD, "shift"],
-        "r",
-        lazy.spawncmd(),
+    Key([Keys.MOD, "shift"], "r", lazy.spawncmd(), 
         desc="Spawn a command using a prompt widget"),
-    
     Key([], Keys.VOL_UP, lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -10%")),
     Key([], Keys.VOL_DOWN, lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -10%")),
     Key([], Keys.TOGGLE_MUTE, lazy.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")),
-    # Key([], Keys.VOL_UP, lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -10%")),
-    # Key([], Keys.VOL_DOWN, lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -10%")),
-    # Key([], Keys.TOGGLE_MUTE, lazy.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")),
+    Key([], Keys.NEXT, lazy.spawn("playerctl next")),
+    Key([], Keys.PREV, lazy.spawn("playerctl previous")),
+    Key([], Keys.TOGGLE_PLAY, lazy.spawn("playerctl play-pause")),
     Key([Keys.MOD], "Print", lazy.spawn(Apps.SCREENSHOT), desc="Take screenshot"),
     Key([Keys.ALT], "period", lazy.next_screen(), desc="Cycle monitor focus"),
 ] + focus + move + grow + spawn
