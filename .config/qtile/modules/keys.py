@@ -63,7 +63,7 @@ keys = [
     Key([Keys.MOD, "shift"], "space", lazy.layout.flip()),
     Key([Keys.MOD, "shift"], "r", lazy.spawncmd(), 
         desc="Spawn a command using a prompt widget"),
-    Key([], Keys.VOL_UP, lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -10%")),
+    Key([], Keys.VOL_UP, lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ +10%")),
     Key([], Keys.VOL_DOWN, lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -10%")),
     Key([], Keys.TOGGLE_MUTE, lazy.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")),
     Key([], Keys.NEXT, lazy.spawn("playerctl next")),

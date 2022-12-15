@@ -52,3 +52,6 @@ welc (){
 	figlet -f standard "$1" | lolcat -f
 }
 
+start-service() {
+    /home/glozada/perl5/perlbrew/perls/perl-5.34.1/bin/perl $ROSETTA_ROOT/server_instances/$1/script/$1 prefork "$@"
+}

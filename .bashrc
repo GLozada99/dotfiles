@@ -86,3 +86,5 @@ _open_files_for_editing() {
 # alias ef='_open_files_for_editing'     # 'ef' opens given file(s) for editing
 # alias pacdiff=eos-pacdiff
 ################################################################################
+source /home/glozada/eig/rosetta/bin/dev-utils/bashrc-functions.sh
+. "$HOME/.cargo/env"

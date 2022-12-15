@@ -39,6 +39,16 @@ my-backward-delete-word() {
 zle -N my-backward-delete-word
 bindkey '^W' my-backward-delete-word
 
+source ~/perl5/perlbrew/etc/bashrc
+source ~/.zprofile
+
+
+####################################################
+source $HOME/eig/rosetta/bin/dev-utils/bashrc-functions.sh
+########################################
+
+
+
 
 
 welc "Welcome Gus"
