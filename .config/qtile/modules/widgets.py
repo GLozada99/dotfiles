@@ -101,6 +101,10 @@ def get_base_widgets():
                 lambda: qtile.cmd_spawn(Apps.TERMINAL + ' -e yay -Syu')}
         ),
         widget.TextBox(
+            text = '', padding = 0,
+            fontsize = 28, foreground='#2f343f'
+        ),
+        widget.TextBox(
             text = '', padding = 0, 
             fontsize = 28, foreground='#2f343f'
         ),
@@ -133,7 +137,15 @@ def get_base_widgets():
 def get_systray_widgets():
     systray_position = 11
     systray_widgets =  get_base_widgets()
+
+    del systray_widgets[systray_position]
+    # del systray_widgets[systray_position]
+
     systray_widgets.insert(systray_position, widget.Systray(icon_size = 20))
+    systray_widgets.insert(systray_position, widget.TextBox(
+            text = '', padding = 0,
+            fontsize = 28, foreground='#2f343f'
+        ))
     
     return systray_widgets
 

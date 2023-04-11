@@ -10,7 +10,7 @@ SAVEHIST=10000
 HISTFILE=~/.histfile
 setopt INC_APPEND_HISTORY
 setopt SHARE_HISTORY 
-
+unsetopt nomatch
 autoload -Uz compinit
 compinit
 
@@ -25,7 +25,8 @@ bindkey '^[[1;5C' forward-word
 source /home/glozada/.local/bin/zsh-z.plugin.zsh
 zstyle ':completion:*' menu select
 zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
-plugins=(git z sudo zsh-completions)
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+plugins=(git z sudo zsh-completions osx)
 
 
 # Start Starship

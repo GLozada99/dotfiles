@@ -5,20 +5,20 @@ from modules.settings.apps import Apps
 from modules.settings.keys import Keys
 
 focus = [
-    Key([Keys.MOD], "Left", lazy.layout.left(), desc="Move Focus Left"),
-    Key([Keys.MOD], "Right", lazy.layout.right(), desc="Move Focus Right"),
-    Key([Keys.MOD], "Down", lazy.layout.down(), desc="Move Focus Down"),
-    Key([Keys.MOD], "Up", lazy.layout.up(), desc="Move Focus Up"),
+    Key([Keys.ALT], "Left", lazy.layout.left(), desc="Move Focus Left"),
+    Key([Keys.ALT], "Right", lazy.layout.right(), desc="Move Focus Right"),
+    Key([Keys.ALT], "Down", lazy.layout.down(), desc="Move Focus Down"),
+    Key([Keys.ALT], "Up", lazy.layout.up(), desc="Move Focus Up"),
 ]
 
 move = [
-    Key([Keys.ALT], "Left",
+    Key([Keys.MOD], "Left",
         lazy.layout.shuffle_left(), desc="Move Window Left"),
-    Key([Keys.ALT], "Right",
+    Key([Keys.MOD], "Right",
         lazy.layout.shuffle_right(), desc="Move Window Right"),
-    Key([Keys.ALT], "Down",
+    Key([Keys.MOD], "Down",
         lazy.layout.shuffle_down(), desc="Move Window Down"),
-    Key([Keys.ALT], "Up",
+    Key([Keys.MOD], "Up",
         lazy.layout.shuffle_up(), desc="Move Window Up"),
 ]
 
@@ -70,5 +70,6 @@ keys = [
     Key([], Keys.PREV, lazy.spawn("playerctl previous")),
     Key([], Keys.TOGGLE_PLAY, lazy.spawn("playerctl play-pause")),
     Key([Keys.MOD], "Print", lazy.spawn(Apps.SCREENSHOT), desc="Take screenshot"),
+    Key([Keys.MOD], "Home", lazy.spawn(Apps.SCREENSHOT), desc="Take screenshot"),
     Key([Keys.ALT], "period", lazy.next_screen(), desc="Cycle monitor focus"),
 ] + focus + move + grow + spawn

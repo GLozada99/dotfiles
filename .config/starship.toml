@@ -16,9 +16,9 @@ disabled = true
 
 
 [directory]
-truncation_length = 8
+truncation_length = 5
 truncation_symbol = "…/"
-truncate_to_repo = false
+truncate_to_repo = true
 style = "yellow"
 read_only = " 🔒"
 read_only_style = "fg:#ffb86c"
@@ -36,3 +36,6 @@ modified = '[\(!$count\)](red)'
 staged = '[\(+$count\)](yellow)'
 untracked = '[\(?$count\)](blue)'
 #style = 'bold gray'
+
+[gcloud]
+disabled = true
