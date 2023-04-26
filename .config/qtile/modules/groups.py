@@ -20,9 +20,9 @@ for entry in GROUP_NAMES:
             desc="Switch to & move focused window to group {}".format(entry['name'])),
     ])
 
-# keys.extend(
-#     [
-#         Key([Keys.ALT], "Right", lazy.screen.next_group(), desc="Switch to next group"),
-#         Key([Keys.ALT], "Left", lazy.screen.prev_group(), desc="Switch to previous group"),
-#     ]
-# )
+keys.extend(
+    [
+        Key([Keys.ALT], "Right", lazy.screen.next_group(), desc="Switch to next group"),
+        Key([Keys.ALT], "Left", lazy.screen.prev_group(), desc="Switch to previous group"),
+    ]
+)

@@ -49,7 +49,8 @@ source $HOME/eig/rosetta/bin/dev-utils/bashrc-functions.sh
 ########################################
 
 
-
-
+source $HOME/perl5/perlbrew/etc/bashrc
 
 welc "Welcome Gus"
+
+fpath+=~/.zfunc
