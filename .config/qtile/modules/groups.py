@@ -22,7 +22,7 @@ for entry in GROUP_NAMES:
 
 keys.extend(
     [
-        Key([Keys.ALT], "Right", lazy.screen.next_group(), desc="Switch to next group"),
-        Key([Keys.ALT], "Left", lazy.screen.prev_group(), desc="Switch to previous group"),
+        Key([Keys.ALT], "slash", lazy.screen.next_group(), desc="Switch to next group"),
+        Key([Keys.ALT], "comma", lazy.screen.prev_group(), desc="Switch to previous group"),
     ]
 )
