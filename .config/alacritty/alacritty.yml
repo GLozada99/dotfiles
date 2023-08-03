@@ -112,8 +112,8 @@ font:
     # family: CodeNewRoman Nerd Font
     # family: RobotoMono Nerd Font
     # family: Hack
-    family: "MesloLGS NF"
-    # family: JetBrains Mono
+    # family: "MesloLGS NF"
+    family: JetBrains Mono Nerd Font
     # family: UbuntuMono Nerd Font
     # family: Monofur Nerd Font
     # family: TerminessTTF Nerd Font
@@ -131,7 +131,8 @@ font:
     # family: Source Code Pro
     # family: CodeNewRoman Nerd Font
     # family: RobotoMono Nerd Font
-    family: "MesloLGS NF"
+    # family: "MesloLGS NF"
+    family: JetBrains Mono Nerd Font
     # family: JetBrains Mono
     # family: UbuntuMono Nerd Font
     # family: Monofur Nerd Font
@@ -150,7 +151,8 @@ font:
     # family: Source Code Pro
     # family: CodeNewRoman Nerd Font
     # family: RobotoMono Nerd Font
-    family: "MesloLGS NF"
+    # family: "MesloLGS NF"
+    family: JetBrains Mono Nerd Font
     # family: JetBrains Mono
     # family: UbuntuMono Nerd Font
     # family: Monofuritalic Nerd Font Mono
@@ -169,7 +171,8 @@ font:
     # family: Source Code Pro
     # family: CodeNewRoman Nerd Font
     # family: RobotoMono Nerd Font
-    family: "MesloLGS NF"
+    # family: "MesloLGS NF"
+    family: JetBrains Mono Nerd Font
     # family: JetBrains Mono
     # family: UbuntuMono Nerd Font
     # family: Monofuritalic Nerd Font Mono
