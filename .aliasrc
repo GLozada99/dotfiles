@@ -22,7 +22,7 @@ alias publicIP='dig +short myip.opendns.com @resolver1.opendns.com'
 alias clear='clear && welc "Welcome Gus"'
 alias pycharmpwd='pycharm . > /dev/null 2>&1 & disown'
 alias emacs="emacsclient -c -a 'emacs'"
-alias gc="/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
+alias gc="/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME"
 ex ()
 {
   if [ -f $1 ] ; then
