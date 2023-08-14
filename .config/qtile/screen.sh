@@ -1,11 +1,14 @@
 #!/bin/sh
 
-if [[ -n `xrandr --query | grep "HDMI1 connected"` ]]
+SCREEN_NAME=${1:-"eDP-1"}
+HDMI_NAME=${2:-"HDMI-1"}
+
+setxkbmap -option compose:rctrl
+
+if [[ -n `xrandr --query | grep "$HDMI_NAME connected"` ]]
 then
-    xrandr --output HDMI1 --mode 1920x1080 --right-of eDP1
-	setxkbmap -option compose:rctrl
+    xrandr --output $HDMI_NAME --mode 1920x1080 --right-of $SCREEN_NAME
     setxkbmap -option compose:menu
 else
-    xrandr --output HDMI1 --off
-    setxkbmap -option compose:rctrl
+    xrandr --output $HDMI_NAME --off
 fi
