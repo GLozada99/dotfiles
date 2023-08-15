@@ -1,20 +1,11 @@
 import os
-from libqtile import widget
+
 from libqtile import qtile
+from qtile_extras import widget
+from qtile_extras.widget.decorations import BorderDecoration
 
 from modules.settings.apps import Apps
-
-colors = [
-	      ["#282c34", "#282c34"], # panel background
-          ["#3d3f4b", "#434758"], # background for current screen tab
-          ["#ffffff", "#ffffff"], # font color for group names
-          ["#ff5555", "#ff5555"], # border line color for current tab
-          ["#74438f", "#74438f"], # border line color for 'other tabs' and color for 'odd widgets'
-          ["#4f76c7", "#4f76c7"], # color for the 'even widgets'
-          ["#e1acff", "#e1acff"], # window name
-          ["#ecbbfb", "#ecbbfb"]  # backbround for inactive screens
-] 
-
+from modules.settings.colors import monokai_pro as colors
 
 widget_defaults = dict(
     font='Cantarell',
@@ -55,39 +46,39 @@ volume = MyVolume(
     fontsize=18,
     font='Font Awesome 5 Free',
     foreground=colors[4],
-    background='#2f343f',
+    background=colors[0],
     mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn("pavucontrol"),
                        'Button3': lambda: qtile.cmd_spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle"),}
 )
 
 def get_base_widgets():
     return [
-        widget.Sep(padding=3, linewidth=0, background="#2f343f"),
+        widget.Sep(padding=3, linewidth=0, background=colors[0]),
         widget.Image(
             filename='~/.config/qtile/logo.png', margin=3,
-            background="#2f343f", 
+            background=colors[0],
             mouse_callbacks={
                 'Button1': lambda: qtile.cmd_spawn("rofi -show combi")
             }
         ),
-        widget.Sep(padding=4, linewidth=0, background="#2f343f"), 
+        widget.Sep(padding=4, linewidth=0, background=colors[0]),
         widget.GroupBox(
             highlight_method='line',
-            this_screen_border="#5294e2",
-            this_current_screen_border="#5294e2",
-            active="#ffffff",
-            inactive="#848e96",
-            background="#2f343f"
+            this_screen_border=colors[6],
+            this_current_screen_border=colors[6],
+            active=colors[6],
+            inactive=colors[1],
+            background=colors[0]
         ),
         widget.TextBox(
             text = '',
             padding = 0,
             fontsize = 28,
-            foreground='#2f343f'
+            foreground=colors[0]
         ),
         widget.Prompt(),
         widget.Spacer(length=5),
-        widget.WindowName(foreground='#99c0de',fmt='{}'),
+        widget.WindowName(foreground=colors[8],fmt='{}'),
         widget.Chord(
             name_transform=lambda name: name.upper(),
             chords_colors={'launch': ("#ff0000", "#ffffff")}
@@ -95,39 +86,39 @@ def get_base_widgets():
         widget.CurrentLayoutIcon(scale=0.75),
         widget.CheckUpdates(
             update_interval=1800, distro="Arch_yay",
-            display_format="{updates} Updates", foreground="#ffffff",
-            background="#2f343f",
+            display_format="{updates} Updates", foreground=colors[1],
+            background=colors[0],
             mouse_callbacks={'Button1':
                 lambda: qtile.cmd_spawn(Apps.TERMINAL + ' -e yay -Syu')}
         ),
         widget.TextBox(
             text = '', padding = 0,
-            fontsize = 28, foreground='#2f343f'
+            fontsize = 28, foreground=colors[0]
         ),
         widget.TextBox(
-            text = '', padding = 0, 
-            fontsize = 28, foreground='#2f343f'
+            text = '', padding = 0,
+            fontsize = 28, foreground=colors[0]
         ),
         volume,
         widget.TextBox(
             text = '', padding = 0,
-            fontsize = 28, foreground='#2f343f'
+            fontsize = 28, foreground=colors[0]
         ),
         widget.TextBox(
             text = '', padding = 0,
-            fontsize = 28, foreground='#2f343f'
+            fontsize = 28, foreground=colors[0]
         ),
         widget.Clock(
             format=' %Y-%m-%d %a %I:%M %p',
-            background="#2f343f", foreground='#9bd689'
+            background=colors[0], foreground=colors[4]
         ),
         widget.TextBox(
             text = '', padding = 0,
-            fontsize = 28, foreground='#2f343f'
+            fontsize = 28, foreground=colors[0]
         ),
         widget.TextBox(
-            text='', foreground='#e39378',
-            mouse_callbacks={'Button1': lambda: 
+            text='', foreground=colors[5],
+            mouse_callbacks={'Button1': lambda:
                 qtile.cmd_spawn(
                     os.path.expanduser(
                         '~/.config/rofi/powermenu.sh'))}
@@ -144,8 +135,8 @@ def get_systray_widgets():
     systray_widgets.insert(systray_position, widget.Systray(icon_size = 20))
     systray_widgets.insert(systray_position, widget.TextBox(
             text = '', padding = 0,
-            fontsize = 28, foreground='#2f343f'
+            fontsize = 28, foreground=colors[0]
         ))
-    
+
     return systray_widgets
 
