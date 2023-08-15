@@ -57,7 +57,7 @@ start-service() {
 }
 
 source_files() {
-    for f in ~/.local/share/to_source/*
+    for f in /home/glozada/.local/to_source/*;
     do
         [[ -f $f ]] && . $f
     done
