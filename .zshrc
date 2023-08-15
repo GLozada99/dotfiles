@@ -9,7 +9,7 @@ HISTSIZE=12000
 SAVEHIST=10000
 HISTFILE=~/.histfile
 setopt INC_APPEND_HISTORY
-setopt SHARE_HISTORY 
+setopt SHARE_HISTORY
 unsetopt nomatch
 autoload -Uz compinit
 compinit
@@ -22,7 +22,6 @@ bindkey '^[[1;5D' backward-word
 bindkey '^[[1;5C' forward-word
 
 # Pluggins
-source /home/glozada/.local/bin/zsh-z.plugin.zsh
 zstyle ':completion:*' menu select
 zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
@@ -40,17 +39,8 @@ my-backward-delete-word() {
 zle -N my-backward-delete-word
 bindkey '^W' my-backward-delete-word
 
-source ~/perl5/perlbrew/etc/bashrc
-source ~/.zprofile
-
-
-####################################################
-source $HOME/eig/rosetta/bin/dev-utils/bashrc-functions.sh
-########################################
-
-
-source $HOME/perl5/perlbrew/etc/bashrc
-
 welc "Welcome Gus"
 
 fpath+=~/.zfunc
+
+source_files
