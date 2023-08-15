@@ -14,8 +14,8 @@ run /usr/bin/blueman-applet & disown
 run /usr/bin/nm-applet & disown
 run /usr/bin/variety & disown
 run /usr/bin/flameshot & disown
-run /usr/bin/megasync & disown
 run /usr/bin/caffeine-indicator & disown
+run /usr/bin/cbatticon & disown
 
 eos-welcome & disown
 
