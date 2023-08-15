@@ -1,0 +1,17 @@
+[init]
+	defaultBranch = main
+[user]
+	email = gu.lozada9@gmail.com
+	name = Gustavo Lozada
+[alias]
+	cm = commit -m
+	rst = restore --staged
+	dfs = diff --staged
+	sw = switch
+	swc = switch -c
+	amend = commit --amend --no-edit
+	amm = commit --amend
+[core]
+	editor = nvim
+[push]
+	autoSetupRemote = on
