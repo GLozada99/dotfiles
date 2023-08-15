@@ -37,7 +37,11 @@ def move_window_to_group(window):
         return
 
     group_name = qtile.current_screen.group.name
-    wm_name = window.window.get_wm_class()[0] 
+
+    try:
+        wm_name = window.window.get_wm_class()[0]
+    except IndexError:
+        return
     if wm_name in group_match_map[group_name]:
         return
 
