@@ -64,7 +64,9 @@ def get_base_widgets():
             filename="~/.config/qtile/logo.png",
             margin=3,
             background=colors[0],
-            mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("rofi -show combi")},
+            mouse_callbacks={
+                "Button1": lambda: qtile.cmd_spawn("rofi -show combi"),
+            },
         ),
         widget.Sep(padding=4, linewidth=0, background=colors[0]),
         widget.GroupBox(
@@ -138,7 +140,10 @@ def get_base_widgets():
         widget.Memory(
             foreground=colors[4],
             background=colors[0],
-            mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(Apps.TERMINAL)},
+            mouse_callbacks={
+                "Button1": lambda: qtile.cmd_spawn(Apps.TERMINAL + " -e htop"),
+                "Button3": lambda: qtile.cmd_spawn(Apps.TERMINAL + " -e nvtop"),
+            },
             fmt="Mem:{}",
             padding=5,
             decorations=[
