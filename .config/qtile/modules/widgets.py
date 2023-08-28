@@ -1,7 +1,7 @@
 import os
 
 from libqtile import qtile
-from qtile_extras import widget
+from qtile_extras import widget as widget
 from qtile_extras.widget.decorations import BorderDecoration
 
 from modules.settings.apps import Apps
@@ -58,8 +58,8 @@ volume = MyVolume(
 
 
 def get_base_widgets():
-    return [
-        widget.Sep(padding=3, linewidth=0, background=colors[0]),
+    logo = [
+        widget.Sep(padding=4, linewidth=0, background=colors[0]),
         widget.Image(
             filename="~/.config/qtile/logo.png",
             margin=3,
@@ -68,6 +68,9 @@ def get_base_widgets():
                 "Button1": lambda: qtile.cmd_spawn("rofi -show combi"),
             },
         ),
+    ]
+
+    group = [
         widget.Sep(padding=4, linewidth=0, background=colors[0]),
         widget.GroupBox(
             highlight_method="line",
@@ -77,43 +80,32 @@ def get_base_widgets():
             inactive=colors[1],
             background=colors[0],
         ),
-        widget.TextBox(text="", padding=0, fontsize=28, foreground=colors[0]),
-        widget.Prompt(),
-        widget.Spacer(length=5),
-        widget.WindowName(foreground=colors[8], fmt="{}"),
+        widget.TextBox(
+            text="", padding=0, fontsize=28, foreground=colors[0], background=colors[2]
+        ),
+    ]
+
+    space = [
+        widget.Prompt(background=colors[2]),
+        widget.Spacer(background=colors[2], length=5),
+        widget.WindowName(background=colors[2], foreground=colors[8], fmt="{}"),
         widget.Chord(
+            background=colors[2],
             name_transform=lambda name: name.upper(),
             chords_colors={"launch": ("#ff0000", "#ffffff")},
         ),
-        widget.CurrentLayoutIcon(scale=0.75),
-        widget.CheckUpdates(
-            update_interval=1800,
-            distro="Arch_yay",
-            display_format="{updates} Updates",
-            foreground=colors[1],
-            background=colors[0],
-            mouse_callbacks={
-                "Button1": lambda: qtile.cmd_spawn(Apps.TERMINAL + " -e yay -Syu")
-            },
+        widget.CurrentLayoutIcon(background=colors[2], scale=0.75),
+    ]
+
+    volume_and_battery = [
+        widget.TextBox(
+            text="", padding=0, fontsize=28, foreground=colors[0], background=colors[2]
         ),
-        # widget.TextBox(text="", padding=0, fontsize=28, foreground=colors[0]),
-        # widget.TextBox(text="", padding=0, fontsize=28, foreground=colors[0]),
-        # Systray for principal window,
-        widget.TextBox(text="", padding=0, fontsize=28, foreground=colors[0]),
-        widget.TextBox(text="", padding=0, fontsize=28, foreground=colors[0]),
         MyVolume(
-            fontsize=18,
+            fontsize=25,
             font="JetBrains Mono Nerd Font",
-            foreground=colors[4],
+            foreground=colors[7],
             background=colors[0],
-            decorations=[
-                BorderDecoration(
-                    colour=colors[4],
-                    border_width=[0, 0, 2, 0],
-                    padding_x=5,
-                    padding_y=None,
-                )
-            ],
             mouse_callbacks={
                 "Button1": lambda: qtile.cmd_spawn("pavucontrol"),
                 "Button3": lambda: qtile.cmd_spawn(
@@ -121,9 +113,22 @@ def get_base_widgets():
                 ),
             },
         ),
-        widget.ThermalSensor(
+        widget.Sep(linewidth=0, padding=5, background=colors[0]),
+        widget.UPowerWidget(
             foreground=colors[8],
             background=colors[0],
+            battery_name="BAT0",
+            padding=10,
+        ),
+    ]
+
+    metrics = [
+        widget.TextBox(
+            text="", padding=0, fontsize=28, foreground=colors[2], background=colors[0]
+        ),
+        widget.ThermalSensor(
+            foreground=colors[8],
+            background=colors[2],
             threshold=90,
             fmt="Temp: {}",
             padding=5,
@@ -136,10 +141,10 @@ def get_base_widgets():
                 )
             ],
         ),
-        widget.Sep(linewidth=0, padding=6, foreground=colors[0], background=colors[0]),
+        widget.Sep(linewidth=0, padding=10, background=colors[2]),
         widget.Memory(
             foreground=colors[4],
-            background=colors[0],
+            background=colors[2],
             mouse_callbacks={
                 "Button1": lambda: qtile.cmd_spawn(Apps.TERMINAL + " -e htop"),
                 "Button3": lambda: qtile.cmd_spawn(Apps.TERMINAL + " -e nvtop"),
@@ -155,26 +160,10 @@ def get_base_widgets():
                 )
             ],
         ),
-        widget.Sep(linewidth=0, padding=6, foreground=colors[0], background=colors[0]),
-        widget.Sep(linewidth=0, padding=6, foreground=colors[0], background=colors[0]),
-        widget.KeyboardLayout(
-            foreground=colors[8],
-            background=colors[0],
-            fmt="Keyboard: {}",
-            padding=5,
-            decorations=[
-                BorderDecoration(
-                    colour=colors[8],
-                    border_width=[0, 0, 2, 0],
-                    padding_x=5,
-                    padding_y=None,
-                )
-            ],
-        ),
-        widget.Sep(linewidth=0, padding=6, foreground=colors[0], background=colors[0]),
+        widget.Sep(linewidth=0, padding=10, background=colors[2]),
         widget.Clock(
             foreground=colors[6],
-            background=colors[0],
+            background=colors[2],
             format="%A, %B %d - %H:%M ",
             decorations=[
                 BorderDecoration(
@@ -185,10 +174,18 @@ def get_base_widgets():
                 )
             ],
         ),
-        widget.TextBox(text="", padding=0, fontsize=28, foreground=colors[0]),
+    ]
+
+    power = [
         widget.TextBox(
+            text="", padding=0, fontsize=28, foreground=colors[0], background=colors[2]
+        ),
+        widget.TextBox(
+            fontsize=20,
+            padding=8,
             text="",
             foreground=colors[5],
+            background=colors[0],
             mouse_callbacks={
                 "Button1": lambda: qtile.cmd_spawn(
                     os.path.expanduser("~/.config/rofi/powermenu.sh")
@@ -197,18 +194,22 @@ def get_base_widgets():
         ),
     ]
 
+    return logo + group + space + volume_and_battery + metrics + power
+    # Systray for principal window,
+
 
 def get_systray_widgets():
-    systray_position = 11
+    systray_position = 14
     systray_widgets = get_base_widgets()
 
-    del systray_widgets[systray_position]
-    # del systray_widgets[systray_position]
+    # sep = systray_widgets.pop(systray_position
 
-    systray_widgets.insert(systray_position, widget.Systray(icon_size=20))
     systray_widgets.insert(
-        systray_position,
-        widget.TextBox(text="", padding=0, fontsize=28, foreground=colors[0]),
+        systray_position, widget.Systray(icon_size=20, background=colors[0])
     )
+    # systray_widgets.insert(
+    #     systray_position,
+    #     widget.TextBox(text="", padding=0, fontsize=28, foreground=colors[0]),
+    # )
 
     return systray_widgets
