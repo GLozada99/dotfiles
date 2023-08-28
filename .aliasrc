@@ -13,7 +13,7 @@ alias neofetch='neofetch | lolcat'
 alias history='history 1'
 alias fh='history | grep'
 
-#replacements
+#Replacements
 alias ls='exa'
 alias cat='bat'
 
@@ -23,6 +23,9 @@ alias clear='clear && welc "Welcome Gus"'
 alias pycharmpwd='pycharm . > /dev/null 2>&1 & disown'
 alias emacs="emacsclient -c -a 'emacs'"
 alias gc="/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME"
+
+
+#Functions
 ex ()
 {
   if [ -f $1 ] ; then
@@ -45,8 +48,6 @@ ex ()
     echo "'$1' is not a valid file"
   fi
 }
-
-
 
 welc (){
 	figlet -f standard "$1" | lolcat -f
