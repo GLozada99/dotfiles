@@ -16,6 +16,7 @@ run /usr/bin/variety & disown
 run /usr/bin/flameshot & disown
 run /usr/bin/caffeine-indicator & disown
 run /usr/bin/cbatticon & disown
+run /usr/bin/clight-gui & disown
 # run /usr/bin/spotify-tray & disown
 
 eos-welcome & disown
