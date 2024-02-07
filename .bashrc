@@ -57,3 +57,4 @@ _open_files_for_editing() {
 [[ -f ~/.aliasrc ]] && . ~/.aliasrc
 
 source_files
+. "$HOME/.cargo/env"

@@ -153,6 +153,9 @@ Windows = "󰍲 "
 disabled = true
 symbol = "󰏗 "
 
+[perl]
+symbol = "perl "
+
 [pijul_channel]
 symbol = " "
 
