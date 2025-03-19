@@ -54,7 +54,7 @@ welc (){
 }
 
 start-service() {
-    /opt/perl5/perlbrew/perls/perl-5.36.1/bin/perl $ROSETTA_ROOT/server_instances/$1/script/$1 prefork "$@"
+    /opt/perl5/perlbrew/perls/perl-5.38.2/bin/perl $ROSETTA_ROOT/server_instances/$1/script/$1 prefork "$@"
 }
 
 source_files() {
@@ -62,4 +62,44 @@ source_files() {
     do
         [[ -f $f ]] && . $f
     done
+}
+
+reset-db() {
+    rosetta_basedir=""
+
+    if [ -d ~/EIG/rosetta ]; then
+        rosetta_basedir=~/EIG/rosetta
+    elif [ -d ~/eig/rosetta ]; then
+        rosetta_basedir=~/eig/rosetta
+    elif [ -d ~/devel/rosetta ]; then
+        rosetta_basedir=~/devel/rosetta
+    elif [ -d /eig/rosetta ]; then
+        rosetta_basedir=/eig/rosetta
+    fi
+
+    if [ $rosetta_basedir ]; then
+        cd $rosetta_basedir
+
+        echo '# Resetting Rosetta MySQL databases...'
+        ./db/create_schemas.pl -user=root load
+
+        if [ -d db/patches-latest/Postgres ]; then
+            echo '# Resetting Rosetta Activity database...'
+            cd db/patches-latest/Postgres
+
+
+            # If pg_hba.conf uses trust for the local domain socket connections
+            # we can't specify the -h.
+
+            psql -h 127.0.0.1 -p 5432 -U root postgres -f Activity.sql
+
+            for patch_file in `ls [0-9]*`; do
+                echo "# --------------------------------------"
+                echo "# $patch_file"
+                psql -h 127.0.0.1 -p 5432 -U root postgres -f $patch_file
+            done
+        fi
+    fi
+
+    echo '# Done'
 }
