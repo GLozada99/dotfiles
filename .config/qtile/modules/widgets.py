@@ -1,7 +1,7 @@
 import os
 
 from libqtile import qtile
-from qtile_extras import widget as widget
+from qtile_extras import widget
 from qtile_extras.widget.decorations import BorderDecoration
 
 from modules.settings.apps import Apps
@@ -56,9 +56,16 @@ volume = MyVolume(
     },
 )
 
+def _get_separator(foreground: str, background: str):
+    return [widget.TextBox(
+        text="", padding=0, fontsize=28, foreground=foreground, background=background,
+    )]
 
-def get_base_widgets():
-    logo = [
+def _get_spacer(foreground: str, background: str, length: int):
+    return [widget.Spacer(background=background, length=length),]
+
+def _get_logo():
+    return [
         widget.Sep(padding=4, linewidth=0, background=colors[0]),
         widget.Image(
             filename="~/.config/qtile/logo.png",
@@ -70,7 +77,9 @@ def get_base_widgets():
         ),
     ]
 
-    group = [
+
+def _get_group():
+    return [
         widget.Sep(padding=4, linewidth=0, background=colors[0]),
         widget.GroupBox(
             highlight_method="line",
@@ -85,10 +94,17 @@ def get_base_widgets():
         ),
     ]
 
-    space = [
+
+def _get_space():
+    return [
         widget.Prompt(background=colors[2]),
         widget.Spacer(background=colors[2], length=5),
-        widget.WindowName(background=colors[2], foreground=colors[8], fmt="{}"),
+        widget.WindowName(
+            background=colors[2],
+            foreground=colors[8],
+            fmt="{}",
+            max_chars=65,
+        ),
         widget.Chord(
             background=colors[2],
             name_transform=lambda name: name.upper(),
@@ -97,22 +113,24 @@ def get_base_widgets():
         widget.CurrentLayoutIcon(background=colors[2], scale=0.75),
     ]
 
-    volume_and_battery = [
+
+def _get_volume_and_battery():
+    return [
         widget.TextBox(
             text="", padding=0, fontsize=28, foreground=colors[0], background=colors[2]
         ),
-        MyVolume(
-            fontsize=25,
-            font="JetBrains Mono Nerd Font",
-            foreground=colors[7],
-            background=colors[0],
-            mouse_callbacks={
-                "Button1": lambda: qtile.cmd_spawn("pavucontrol"),
-                "Button3": lambda: qtile.cmd_spawn(
-                    "pactl set-sink-mute @DEFAULT_SINK@ toggle"
-                ),
-            },
-        ),
+        # MyVolume(
+        #     fontsize=25,
+        #     font="JetBrains Mono Nerd Font",
+        #     foreground=colors[7],
+        #     background=colors[0],
+        #     mouse_callbacks={
+        #         "Button1": lambda: qtile.cmd_spawn("pavucontrol"),
+        #         "Button3": lambda: qtile.cmd_spawn(
+        #             "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+        #         ),
+        #     },
+        # ),
         widget.Sep(linewidth=0, padding=5, background=colors[0]),
         widget.UPowerWidget(
             foreground=colors[8],
@@ -122,7 +140,9 @@ def get_base_widgets():
         ),
     ]
 
-    metrics = [
+
+def _get_metrics():
+    return [
         widget.TextBox(
             text="", padding=0, fontsize=28, foreground=colors[2], background=colors[0]
         ),
@@ -176,7 +196,9 @@ def get_base_widgets():
         ),
     ]
 
-    power = [
+
+def _get_power():
+    return [
         widget.TextBox(
             text="", padding=0, fontsize=28, foreground=colors[0], background=colors[2]
         ),
@@ -194,22 +216,29 @@ def get_base_widgets():
         ),
     ]
 
-    return logo + group + space + volume_and_battery + metrics + power
-    # Systray for principal window,
+
+def _get_systray():
+    return [widget.Systray(icon_size=20, background=colors[0], opacity=1.0)]
 
 
-def get_systray_widgets():
-    systray_position = 14
-    systray_widgets = get_base_widgets()
+def get_horizontal_widgets():
+    return _get_logo() + _get_group() + _get_space() + _get_volume_and_battery() + _get_metrics() + _get_power()
 
-    # sep = systray_widgets.pop(systray_position
 
-    systray_widgets.insert(
-        systray_position, widget.Systray(icon_size=20, background=colors[0])
-    )
-    # systray_widgets.insert(
-    #     systray_position,
-    #     widget.TextBox(text="", padding=0, fontsize=28, foreground=colors[0]),
-    # )
+def get_vertical_widgets():
+    power_widgets = [
+        _get_separator(colors[2], colors[0])[0],
+        _get_separator(colors[0], colors[2])[0],
+        _get_power()[-1]
+    ]
+    return _get_logo() + _get_group() + _get_space() + _get_volume_and_battery() + power_widgets
 
-    return systray_widgets
+def get_principal_widgets():
+    power_widgets = [
+        _get_separator(colors[0], colors[2])[0],
+        _get_power()[-1]
+    ]
+    return (_get_logo() + _get_group() + _get_space() + _get_volume_and_battery() + [
+        widget.Systray(icon_size=20, background=colors[0], opacity=1.0)] +
+            _get_metrics() +
+            power_widgets)

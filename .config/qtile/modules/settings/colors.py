@@ -38,7 +38,7 @@ gruvbox_dark = [
     ["#b8bb26", "#b8bb26"],  # color11
 ]
 monokai_pro = [
-    ["#2D2A2E", "#2D2A2E"],  # bg
+    ["#2D2A2E.0", "#2D2A2E.0"],  # bg
     ["#FCFCFA", "#FCFCFA"],  # fg
     ["#403E41", "#403E41"],  # color01
     ["#FF6188", "#FF6188"],  # color02

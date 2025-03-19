@@ -1,7 +1,7 @@
-from libqtile.command import lazy
+from libqtile.lazy import lazy
 from libqtile.config import Key
-from modules.settings.apps import Apps
 
+from modules.settings.apps import Apps
 from modules.settings.keys import Keys
 
 focus = [
@@ -28,14 +28,16 @@ grow = [
 spawn = [
     Key([Keys.MOD], "Return", lazy.spawn(Apps.TERMINAL), desc="Launch Terminal"),
     Key([Keys.MOD], "b", lazy.spawn(Apps.BROWSERS[0]), desc="Launch Browser 1"),
-    Key([Keys.MOD], "f", lazy.spawn(Apps.BROWSERS[1]), desc="Launch Browser 2"),
     Key([Keys.MOD], "n", lazy.spawn(Apps.FILE_EXPLORER), desc="Launch Nemo"),
-    Key([Keys.MOD], "c", lazy.spawn(Apps.MAIL), desc="Launch Mail Client"),
+    Key([Keys.MOD], "c", lazy.spawn(Apps.BROWSERS[1]), desc="Launch Browser 2"),
+    Key([Keys.MOD], "z", lazy.spawn(Apps.BROWSERS[2]), desc="Launch Browser 3"),
     Key(
         [Keys.MOD], "x", lazy.spawn(Apps.AUDIO_CONTROL), desc="Launch Audio Controller"
     ),
     Key([Keys.MOD], "t", lazy.spawn(Apps.TELEGRAM), desc="Launch Telegram"),
-    Key([Keys.MOD], "d", lazy.spawn(Apps.DOCUMENT), desc="Launch Libreoffice"),
+    Key([Keys.MOD], "w", lazy.spawn(Apps.WHATSAPP), desc="Launch Whatsapp"),
+    # Key([Keys.MOD], "d", lazy.spawn(Apps.DOCUMENT), desc="Launch Libreoffice"),
+    # Key([Keys.MOD], "d", lazy.spawn(Apps.CODE_EDITOR), desc="Launch Libreoffice"),
 ]
 
 keys = (

@@ -1,11 +1,15 @@
 from libqtile.config import Key, Group
 from libqtile.lazy import lazy
+
 from modules.keys import keys
 from modules.constants import GROUP_NAMES
 from modules.settings.keys import Keys
 
 
-groups = [Group(entry['name']) for entry in GROUP_NAMES]
+groups = [
+    Group(entry['name'])
+    for entry in GROUP_NAMES
+]
 
 for entry in GROUP_NAMES:
     keys.extend([

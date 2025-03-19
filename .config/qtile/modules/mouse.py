@@ -1,5 +1,5 @@
 from libqtile.config import Click, Drag
-from libqtile.command import lazy
+from libqtile.lazy import lazy
 from modules.settings.keys import Keys
 
 # Drag floating layouts.
