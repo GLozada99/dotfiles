@@ -23,6 +23,8 @@ format = "[$path]($style) [$read_only]($read_only_style) "
 
 [git_metrics]
 disabled = false
+added_style = 'bold blue'
+format = '[+$added]($added_style)/[-$deleted]($deleted_style) '
 
 [git_status]
 ahead = "⇡${count}"
@@ -33,10 +35,18 @@ staged = '[\(+$count\)](yellow)'
 untracked = '[\(?$count\)](blue)'
 #style = 'bold gray'
 
+[git_branch]
+truncation_length = 40
+symbol = " "
+
+[git_commit]
+tag_disabled = false
+
 [gcloud]
 disabled = true
 
 [aws]
+disabled = true
 symbol = "  "
 
 [buf]
@@ -61,9 +71,6 @@ symbol = " "
 symbol = " "
 
 [fossil_branch]
-symbol = " "
-
-[git_branch]
 symbol = " "
 
 [golang]
