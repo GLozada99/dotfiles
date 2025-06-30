@@ -16,6 +16,7 @@ then
     setxkbmap -option compose:ralt
 else
     xrandr --output $HDMI_NAME --off
+    xrandr --output $HDMI2_NAME --off
     xrandr --output $SCREEN_NAME --gamma 1:1:1
     setxkbmap -option compose:ctrl
     setxkbmap -option compose:ralt

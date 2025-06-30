@@ -33,7 +33,7 @@ def show_window(client):
     global RESET, PREVIOUS_GROUPS, RESET_GROUP_CHANGE
     if (time.time() - RESET) <= 1:
         return
-    client.group.cmd_toscreen()
+    client.group.toscreen()
     RESET_GROUP_CHANGE = time.time()
 
 

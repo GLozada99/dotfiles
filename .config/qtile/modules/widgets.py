@@ -51,8 +51,8 @@ volume = MyVolume(
     foreground=colors[4],
     background=colors[0],
     mouse_callbacks={
-        "Button1": lambda: qtile.cmd_spawn("pavucontrol"),
-        "Button3": lambda: qtile.cmd_spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle"),
+        "Button1": lambda: qtile.spawn("pavucontrol"),
+        "Button3": lambda: qtile.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle"),
     },
 )
 
@@ -72,7 +72,7 @@ def _get_logo():
             margin=3,
             background=colors[0],
             mouse_callbacks={
-                "Button1": lambda: qtile.cmd_spawn("rofi -show combi"),
+                "Button1": lambda: qtile.spawn("rofi -show combi"),
             },
         ),
     ]
@@ -166,8 +166,8 @@ def _get_metrics():
             foreground=colors[4],
             background=colors[2],
             mouse_callbacks={
-                "Button1": lambda: qtile.cmd_spawn(Apps.TERMINAL + " -e htop"),
-                "Button3": lambda: qtile.cmd_spawn(Apps.TERMINAL + " -e nvtop"),
+                "Button1": lambda: qtile.spawn(Apps.TERMINAL + " -e htop"),
+                "Button3": lambda: qtile.spawn(Apps.TERMINAL + " -e nvtop"),
             },
             fmt="Mem:{}",
             padding=5,
@@ -209,7 +209,7 @@ def _get_power():
             foreground=colors[5],
             background=colors[0],
             mouse_callbacks={
-                "Button1": lambda: qtile.cmd_spawn(
+                "Button1": lambda: qtile.spawn(
                     os.path.expanduser("~/.config/rofi/powermenu.sh")
                 )
             },
