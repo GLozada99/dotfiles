@@ -27,20 +27,36 @@ zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 plugins=(git z sudo zsh-completions osx)
 
+autoload -Uz select-word-style
+select-word-style bash
 
 # Start Starship
 eval "$(starship init zsh)"
 # End of lines added by compinstall
 
+
 my-backward-delete-word() {
-    local WORDCHARS=${WORDCHARS/\//}
+    local WORDCHARS='*?_-.~=&;!#$%^{}<>'
+
     zle backward-delete-word
 }
 zle -N my-backward-delete-word
 bindkey '^W' my-backward-delete-word
+
+#case $- in *i*)
+#    [ -z "$TMUX" ] && exec tmux attach
+#esac
 
 welc "Welcome Gus"
 
 fpath+=~/.zfunc
 
 source_files
+source /usr/share/nvm/init-nvm.sh
+
+. "$HOME/.cargo/env"
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+
