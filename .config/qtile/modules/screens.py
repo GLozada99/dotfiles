@@ -52,7 +52,7 @@ def generate_screens():
         case 2:
             return [generate_screen(ScreenType.NORMAL), generate_screen(
                 ScreenType.PRINCIPAL)]
-        case 3:
+        case _:
             return [generate_screen(ScreenType.NORMAL), generate_screen(
                 ScreenType.PRINCIPAL), generate_screen(ScreenType.VERTICAL),]
     # screens = []

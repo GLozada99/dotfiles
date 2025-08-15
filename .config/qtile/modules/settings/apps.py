@@ -3,7 +3,7 @@ class Apps:
     BROWSERS = ["brave", "chromium", "zen-browser"]
     FILE_EXPLORER = "nemo"
     AUDIO_CONTROL = "pavucontrol"
-    TELEGRAM = "telegram-desktop"
+    TELEGRAM = "Telegram"
     WHATSAPP = "wasistlos"
     SCREENSHOT = "flameshot gui"
     DOCUMENT = "libreoffice"

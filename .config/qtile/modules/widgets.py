@@ -132,12 +132,6 @@ def _get_volume_and_battery():
         #     },
         # ),
         widget.Sep(linewidth=0, padding=5, background=colors[0]),
-        widget.UPowerWidget(
-            foreground=colors[8],
-            background=colors[0],
-            battery_name="BAT0",
-            padding=10,
-        ),
     ]
 
 
