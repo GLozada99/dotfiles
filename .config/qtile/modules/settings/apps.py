@@ -8,3 +8,4 @@ class Apps:
     SCREENSHOT = "flameshot gui"
     DOCUMENT = "libreoffice"
     CODE_EDITOR = "jetbrains-pycharm"
+    TODO = "ticktick"

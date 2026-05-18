@@ -8,6 +8,6 @@ def run_command(command: str) -> Iterable[str]:
         return map(lambda entry: entry.decode('utf-8'), stdout.splitlines())
 
 def get_monitor_number() -> int:
-    command = 'xrandr | grep " connected " | awk \'{ print$1 }\''
+    command = 'xrandr | grep " connected " | awk \'$1 !~ /^None-/ { print$1 }\''
     result = run_command(command)
     return len(list(result))

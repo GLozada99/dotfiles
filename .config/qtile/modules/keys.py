@@ -35,6 +35,7 @@ spawn = [
         [Keys.MOD], "x", lazy.spawn(Apps.AUDIO_CONTROL), desc="Launch Audio Controller"
     ),
     Key([Keys.MOD], "t", lazy.spawn(Apps.TELEGRAM), desc="Launch Telegram"),
+    Key([Keys.MOD], "p", lazy.spawn(Apps.TODO), desc="Launch ToDo app"),
     Key([Keys.MOD], "w", lazy.spawn(Apps.WHATSAPP), desc="Launch Whatsapp"),
     # Key([Keys.MOD], "d", lazy.spawn(Apps.DOCUMENT), desc="Launch Libreoffice"),
     # Key([Keys.MOD], "d", lazy.spawn(Apps.CODE_EDITOR), desc="Launch Libreoffice"),

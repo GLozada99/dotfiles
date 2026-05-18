@@ -1,9 +1,8 @@
 from libqtile import bar
 
 from modules.settings.utils import get_monitor_number
-from .widgets import *
+from .widgets import get_vertical_widgets, get_principal_widgets, get_horizontal_widgets
 from libqtile.config import Screen
-import os
 import enum
 
 class ScreenType(enum.Enum):
@@ -46,7 +45,9 @@ def generate_screen(screen_type: ScreenType):
             )
 
 def generate_screens():
-    match get_monitor_number():
+    needed_screens = get_monitor_number()
+    print(needed_screens)
+    match needed_screens:
         case 1:
             return [generate_screen(ScreenType.PRINCIPAL)]
         case 2:
