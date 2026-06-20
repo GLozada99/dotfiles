@@ -1,3 +1,4 @@
+export PATH="/home/glozada/.nvm/versions/node/v24.16.0/bin:$PATH"
 # Lines configured by zsh-newuser-install
 setopt autocd extendedglob notify
 # End of lines configured by zsh-newuser-install
@@ -34,7 +35,6 @@ select-word-style bash
 eval "$(starship init zsh)"
 # End of lines added by compinstall
 
-
 my-backward-delete-word() {
     local WORDCHARS='*?_-.~=&;!#$%^{}<>'
 
@@ -59,4 +59,14 @@ export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
+eval "$(rbenv init -)"
 
+setxkbmap -option compose:ralt
+
+## [Completion]
+## Completion scripts setup. Remove the following line to uninstall
+[[ -f /home/glozada/.dart-cli-completion/zsh-config.zsh ]] && . /home/glozada/.dart-cli-completion/zsh-config.zsh || true
+## [/Completion]
+
+export LC_CTYPE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8

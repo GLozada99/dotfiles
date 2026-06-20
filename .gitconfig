@@ -15,3 +15,5 @@
 	editor = nvim
 [push]
 	autoSetupRemote = on
+[fetch]
+	prune = true
