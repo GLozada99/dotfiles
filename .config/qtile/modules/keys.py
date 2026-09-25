@@ -1,7 +1,7 @@
 import os
 
 from libqtile.lazy import lazy
-from libqtile.config import Key, KeyChord
+from libqtile.config import Key, KeyChord, Match
 
 from modules.settings.apps import Apps
 from modules.settings.keys import Keys
@@ -50,7 +50,10 @@ spawn = [
         name="Power: [l] lock · [o] logout · [s] sleep · [h] hibernate",
         desc="Power actions",
     ),
-    Key([Keys.MOD], "Return", lazy.spawn(Apps.TERMINAL), desc="Launch Terminal"),
+    Key([Keys.MOD], "Return", lazy.group["scratchpad"].dropdown_toggle("terminal"),
+        desc="Toggle floating terminal"),
+    Key([Keys.MOD, "control"], "Return", lazy.spawn(Apps.TERMINAL),
+        desc="Launch regular terminal"),
     Key([Keys.MOD], "b", lazy.spawn(Apps.BROWSERS[0]), desc="Launch Browser 1"),
     Key([Keys.MOD], "n", lazy.spawn(Apps.FILE_EXPLORER), desc="Launch Nemo"),
     Key([Keys.MOD], "c", lazy.spawn(Apps.BROWSERS[1]), desc="Launch Browser 2"),
@@ -80,7 +83,13 @@ keys = (
             desc="Move window focus to previous window",
         ),
         Key([Keys.MOD], "r", lazy.spawn("rofi -show combi"), desc="spawn rofi"),
-        Key([Keys.MOD], "q", lazy.window.kill(), desc="Kill focused window"),
+        Key([Keys.MOD], "q",
+            lazy.window.kill().when(focused=~Match(wm_class="qtile-scratchpad")),
+            lazy.function(lambda qtile: None).when(focused=Match(wm_class="qtile-scratchpad")),
+            desc="Close focused window except floating terminal"),
+        Key([Keys.MOD], "Escape",
+            lazy.window.kill().when(focused=Match(wm_class="qtile-scratchpad")),
+            desc="Close floating terminal"),
         Key([Keys.MOD, "control"], "r", lazy.restart(), desc="Restart Qtile"),
         Key([Keys.MOD, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
         Key([Keys.MOD], "Tab", lazy.next_layout(), desc="Toggle between layouts"),

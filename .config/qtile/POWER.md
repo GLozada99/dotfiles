@@ -123,3 +123,17 @@ rechecking the primary monitor on each update. It never takes keyboard focus,
 accepts no mouse input, and hides after 1.5 seconds. A single GTK application
 instance handles repeated updates. Its diagnostic log is in
 `$XDG_RUNTIME_DIR/qtile-media-osd.log`.
+
+
+## Floating terminal
+
+Super+Enter toggles a reusable Alacritty scratchpad on the current screen.
+It occupies 80% of the screen width and 65% of its height and hides on focus loss.
+Plain Escape is passed through to the terminal; use Super+Enter to hide it.
+Super+Q is ignored in the floating terminal to prevent accidental closure.
+Super+Escape deliberately closes it and ends its shell (a tmux session, if used,
+continues running).
+Hiding keeps its shell and processes running. Ctrl+Super+Enter launches a regular
+terminal. Closing the scratchpad window ends its shell; the next toggle creates
+another. Tmux is optional: run `tmux new-session -A -s scratchpad` inside it to
+retain a named session even if the window closes (not across reboot).

@@ -34,6 +34,8 @@ def screen():
 @hook.subscribe.client_managed
 def show_window(client):
     global RESET, PREVIOUS_GROUPS, RESET_GROUP_CHANGE
+    if "qtile-scratchpad" in (client.get_wm_class() or []):
+        return
     if (time.time() - RESET) <= 1:
         return
     client.group.toscreen()
@@ -61,6 +63,8 @@ def client_focus(client):
 
 @hook.subscribe.client_new
 def move_window_to_group(window):
+    if "qtile-scratchpad" in (window.get_wm_class() or []):
+        return
     global RESET
     if (time.time() - RESET) <= 1:
         return
