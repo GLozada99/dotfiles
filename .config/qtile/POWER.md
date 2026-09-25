@@ -57,8 +57,11 @@ Install `i3lock` and `xss-lock`, then run:
 ```
 
 This is also run at login. It starts `xss-lock --transfer-sleep-lock` with i3lock
-and sets Xfce lid-close actions to suspend on AC and battery, including when
-an external display is attached. Xfce's separate screen-lock request is disabled
+and delegates lid handling to systemd-logind. The current system has
+`HandleLidSwitchDocked=suspend` in `/etc/systemd/logind.conf`, so lid-close
+suspends even with an external display. The default AC/battery action is suspend.
+Xfce 4.20 skips lid-close with external monitors; its old `lid-docked-active-*`
+settings are unsupported in this version. Xfce's separate screen-lock request is disabled
 because xss-lock handles the logind sleep event and delays sleep until locked.
 If the locker dependencies are missing, the script leaves lid settings unchanged.
 
@@ -73,3 +76,23 @@ proceeding unlocked. Manual locking uses the same xss-lock listener as sleep.
 After updating the keybinding, restart Qtile with Super+Ctrl+R. Starting the
 listener and changing lid policy does not require restarting Qtile or logging out.
 A real lock/unlock and lid-close/resume cycle still needs to be checked manually.
+
+## Volume and brightness indicators
+
+Qtile's volume, mute and brightness keys use `scripts/media-control.sh` to show
+brief Dunst notifications with a percentage/progress bar. Repeated adjustments
+replace the previous notification. Volume and brightness change in 5% steps;
+muting shows an explicit muted state. Volume amplification above 100% is retained,
+with the visual progress bar capped at 100%. Notifications expire after 1.5 seconds.
+
+Qtile owns the brightness keys; autostart disables Xfce's duplicate key handler
+and brightness popup. Xfce still manages idle display policy. Restart Qtile with
+Super+Ctrl+R after changing the keybindings. The indicators require `dunstify`,
+`pactl`, `brightnessctl` and `flock` (already installed on this machine).
+
+Brightness uses the dedicated XF86MonBrightnessDown/Up key events (Fn plus
+the brightness keys in the current keyboard mode). Plain F1/F2 remain available
+to applications. These controls adjust the laptop panel, not external monitors.
+
+The observed Fn+F1/F2 events are XF86Launch5 and XF86Launch6; these are
+also bound to brightness down/up. Standard laptop brightness keys remain bound.

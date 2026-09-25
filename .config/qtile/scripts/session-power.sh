@@ -22,10 +22,8 @@ set_property() {
         --create --type "$2" --set "$3"
 }
 
-# Xfce owns lid events; xss-lock owns locking for all logind sleep requests.
-set_property logind-handle-lid-switch bool false
-set_property lid-action-on-ac uint 1
-set_property lid-action-on-battery uint 1
-set_property lid-docked-active-on-ac bool true
-set_property lid-docked-active-on-battery bool true
+# Xfce 4.20 ignores lid-close with external monitors. Delegate to logind.
+# /etc/systemd/logind.conf must specify HandleLidSwitchDocked=suspend.
+# xss-lock owns locking for all logind sleep requests.
+set_property logind-handle-lid-switch bool true
 set_property lock-screen-suspend-hibernate bool false

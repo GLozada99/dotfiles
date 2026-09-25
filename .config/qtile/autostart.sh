@@ -32,3 +32,7 @@ run /usr/bin/xfce4-power-manager
 
 # Configure lid suspend and start the lock-before-sleep listener.
 "$HOME/.config/qtile/scripts/session-power.sh"
+
+# Qtile handles brightness keys and uses Dunst for feedback.
+xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/handle-brightness-keys --create --type bool --set false
+xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/show-brightness-popup --create --type bool --set false

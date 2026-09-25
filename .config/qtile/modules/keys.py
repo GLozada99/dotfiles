@@ -27,6 +27,8 @@ grow = [
     Key([Keys.MOD, Keys.ALT], "Up", lazy.layout.grow_up(), desc="Grow Up"),
 ]
 
+media_control = os.path.expanduser("~/.config/qtile/scripts/media-control.sh")
+
 power_action = os.path.expanduser("~/.config/qtile/scripts/power-action.sh")
 
 spawn = [
@@ -83,13 +85,18 @@ keys = (
             lazy.spawncmd(),
             desc="Spawn a command using a prompt widget",
         ),
-        Key([], Keys.VOL_UP, lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ +10%")),
-        Key([], Keys.VOL_DOWN, lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -10%")),
+        Key([], Keys.VOL_UP, lazy.spawn([media_control, "volume-up"])),
+        Key([], Keys.VOL_DOWN, lazy.spawn([media_control, "volume-down"])),
         Key(
             [],
             Keys.TOGGLE_MUTE,
-            lazy.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle"),
+            lazy.spawn([media_control, "mute"]),
         ),
+        # External keyboard Fn+F1/F2 emit Launch5/Launch6 (verified with xev).
+        Key([], "XF86Launch5", lazy.spawn([media_control, "brightness-down"])),
+        Key([], "XF86Launch6", lazy.spawn([media_control, "brightness-up"])),
+        Key([], "XF86MonBrightnessUp", lazy.spawn([media_control, "brightness-up"])),
+        Key([], "XF86MonBrightnessDown", lazy.spawn([media_control, "brightness-down"])),
         Key([], Keys.NEXT, lazy.spawn("playerctl next")),
         Key([], Keys.PREV, lazy.spawn("playerctl previous")),
         Key([], Keys.TOGGLE_PLAY, lazy.spawn("playerctl play-pause")),
