@@ -29,3 +29,6 @@ eos-welcome &
 # Configure the system services as described in POWER.md before using both.
 run /usr/bin/power-options-tray
 run /usr/bin/xfce4-power-manager
+
+# Configure lid suspend and start the lock-before-sleep listener.
+"$HOME/.config/qtile/scripts/session-power.sh"

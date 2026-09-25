@@ -47,3 +47,29 @@ service. The existing system-wide `nvidia-fix` service also needs review: it
 requests persistence mode and polls the GPU every five seconds. Neither service
 is changed by this Qtile update, and battery-runtime improvements are not yet
 measured.
+
+## Locking and lid suspend
+
+Install `i3lock` and `xss-lock`, then run:
+
+```sh
+~/.config/qtile/scripts/session-power.sh
+```
+
+This is also run at login. It starts `xss-lock --transfer-sleep-lock` with i3lock
+and sets Xfce lid-close actions to suspend on AC and battery, including when
+an external display is attached. Xfce's separate screen-lock request is disabled
+because xss-lock handles the logind sleep event and delays sleep until locked.
+If the locker dependencies are missing, the script leaves lid settings unchanged.
+
+Super+M enters the native Qtile power chord. Release Super, then press L to
+lock, O to log out of the current session, S to suspend, or H to hibernate.
+The chord exits after one action; Escape cancels. The bar shows the available
+keys while the chord is active. No Rofi window is opened by this shortcut.
+The bar power button still opens Rofi, including Restart and Shutdown without
+letter shortcuts. Lock/sleep/hibernate report missing locker setup rather than
+proceeding unlocked. Manual locking uses the same xss-lock listener as sleep.
+
+After updating the keybinding, restart Qtile with Super+Ctrl+R. Starting the
+listener and changing lid policy does not require restarting Qtile or logging out.
+A real lock/unlock and lid-close/resume cycle still needs to be checked manually.

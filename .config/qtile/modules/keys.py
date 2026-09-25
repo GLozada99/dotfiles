@@ -1,5 +1,7 @@
+import os
+
 from libqtile.lazy import lazy
-from libqtile.config import Key
+from libqtile.config import Key, KeyChord
 
 from modules.settings.apps import Apps
 from modules.settings.keys import Keys
@@ -25,7 +27,21 @@ grow = [
     Key([Keys.MOD, Keys.ALT], "Up", lazy.layout.grow_up(), desc="Grow Up"),
 ]
 
+power_action = os.path.expanduser("~/.config/qtile/scripts/power-action.sh")
+
 spawn = [
+    KeyChord(
+        [Keys.MOD], "m",
+        [
+            Key([], "l", lazy.spawn([power_action, "lock"]), desc="Lock"),
+            Key([], "o", lazy.spawn([power_action, "logout"]), desc="Log out"),
+            Key([], "s", lazy.spawn([power_action, "sleep"]), desc="Sleep"),
+            Key([], "h", lazy.spawn([power_action, "hibernate"]), desc="Hibernate"),
+        ],
+        mode=False,
+        name="Power: [l] lock · [o] logout · [s] sleep · [h] hibernate",
+        desc="Power actions",
+    ),
     Key([Keys.MOD], "Return", lazy.spawn(Apps.TERMINAL), desc="Launch Terminal"),
     Key([Keys.MOD], "b", lazy.spawn(Apps.BROWSERS[0]), desc="Launch Browser 1"),
     Key([Keys.MOD], "n", lazy.spawn(Apps.FILE_EXPLORER), desc="Launch Nemo"),

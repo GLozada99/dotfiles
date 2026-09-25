@@ -3,7 +3,10 @@ import os
 import time
 from collections import deque, defaultdict
 
-from libqtile import hook, qtile
+from libqtile import bar, hook, qtile
+from libqtile.widget.chord import Chord
+from qtile_extras.widget.currentlayout import CurrentLayoutIcon
+from libqtile.widget.windowname import WindowName
 
 from modules.constants import GROUP_NAMES
 
@@ -87,3 +90,34 @@ def _get_previous_group(n: int):
         return PREVIOUS_GROUPS[qtile.current_screen][-n]
     except IndexError:
         return
+
+
+# Preserve each screen's normal sizing while a chord occupies the title area.
+_chord_widget_sizes = {}
+
+
+@hook.subscribe.enter_chord
+def show_chord_options(chord_name):
+    for screen in qtile.screens:
+        for panel in (screen.top, screen.bottom, screen.left, screen.right):
+            if not isinstance(panel, bar.Bar):
+                continue
+            for item in panel.widgets:
+                if isinstance(item, (WindowName, CurrentLayoutIcon, Chord)):
+                    if item not in _chord_widget_sizes:
+                        _chord_widget_sizes[item] = (item.length_type, item.length)
+                    item.length_type = bar.STRETCH if isinstance(item, Chord) else bar.STATIC
+                    item.length = 0
+            panel.draw()
+
+
+@hook.subscribe.leave_chord
+def restore_window_details():
+    panels = set()
+    for item, (length_type, length) in _chord_widget_sizes.items():
+        item.length_type = length_type
+        item.length = length
+        panels.add(item.bar)
+    _chord_widget_sizes.clear()
+    for panel in panels:
+        panel.draw()
