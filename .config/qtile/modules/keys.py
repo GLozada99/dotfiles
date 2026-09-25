@@ -5,6 +5,7 @@ from libqtile.config import Key, KeyChord
 
 from modules.settings.apps import Apps
 from modules.settings.keys import Keys
+from modules.shortcuts import show_shortcuts
 
 focus = [
     Key([Keys.ALT], "Left", lazy.layout.left(), desc="Move Focus Left"),
@@ -32,6 +33,7 @@ media_control = os.path.expanduser("~/.config/qtile/scripts/media-control.sh")
 power_action = os.path.expanduser("~/.config/qtile/scripts/power-action.sh")
 
 spawn = [
+    Key([Keys.MOD], "F1", lazy.function(show_shortcuts), desc="Search keyboard shortcuts"),
     Key([Keys.MOD], "v", lazy.spawn("copyq toggle"), desc="Toggle clipboard history"),
     Key([Keys.MOD, "control"], "d",
         lazy.spawn([os.path.expanduser("~/.config/qtile/screen.sh"), "--toggle"]),
@@ -89,18 +91,19 @@ keys = (
             lazy.spawncmd(),
             desc="Spawn a command using a prompt widget",
         ),
-        Key([], Keys.VOL_UP, lazy.spawn([media_control, "volume-up"])),
-        Key([], Keys.VOL_DOWN, lazy.spawn([media_control, "volume-down"])),
+        Key([], Keys.VOL_UP, lazy.spawn([media_control, "volume-up"]), desc="Increase volume"),
+        Key([], Keys.VOL_DOWN, lazy.spawn([media_control, "volume-down"]), desc="Decrease volume"),
         Key(
             [],
             Keys.TOGGLE_MUTE,
             lazy.spawn([media_control, "mute"]),
+            desc="Toggle mute",
         ),
         # External keyboard Fn+F1/F2 emit Launch5/Launch6 (verified with xev).
-        Key([], "XF86Launch5", lazy.spawn([media_control, "brightness-down"])),
-        Key([], "XF86Launch6", lazy.spawn([media_control, "brightness-up"])),
-        Key([], "XF86MonBrightnessUp", lazy.spawn([media_control, "brightness-up"])),
-        Key([], "XF86MonBrightnessDown", lazy.spawn([media_control, "brightness-down"])),
+        Key([], "XF86Launch5", lazy.spawn([media_control, "brightness-down"]), desc="Decrease brightness"),
+        Key([], "XF86Launch6", lazy.spawn([media_control, "brightness-up"]), desc="Increase brightness"),
+        Key([], "XF86MonBrightnessUp", lazy.spawn([media_control, "brightness-up"]), desc="Increase brightness"),
+        Key([], "XF86MonBrightnessDown", lazy.spawn([media_control, "brightness-down"]), desc="Decrease brightness"),
         Key([], Keys.NEXT, lazy.spawn("playerctl next")),
         Key([], Keys.PREV, lazy.spawn("playerctl previous")),
         Key([], Keys.TOGGLE_PLAY, lazy.spawn("playerctl play-pause")),
