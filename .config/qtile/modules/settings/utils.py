@@ -8,6 +8,10 @@ def run_command(command: str) -> Iterable[str]:
         return map(lambda entry: entry.decode('utf-8'), stdout.splitlines())
 
 def get_monitor_number() -> int:
-    command = 'xrandr | grep " connected " | awk \'$1 !~ /^None-/ { print$1 }\''
-    result = run_command(command)
-    return len(list(result))
+    # Connected-but-disabled outputs must not get Qtile screens.
+    result = run_command("xrandr --listactivemonitors")
+    first_line = next(iter(result), "Monitors: 1")
+    try:
+        return max(1, int(first_line.split(":", 1)[1]))
+    except (ValueError, IndexError):
+        return 1

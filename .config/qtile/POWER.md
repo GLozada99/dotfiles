@@ -96,3 +96,14 @@ to applications. These controls adjust the laptop panel, not external monitors.
 
 The observed Fn+F1/F2 events are XF86Launch5 and XF86Launch6; these are
 also bound to brightness down/up. Standard laptop brightness keys remain bound.
+
+
+## Monitor toggle
+
+Super+Ctrl+D toggles laptop-only and regular monitor mode. Laptop-only disables
+all external outputs without unplugging cables. Regular mode restores HDMI-1
+above eDP-1 and HDMI-2 rotated left to its right when both monitors are connected.
+Qtile reloads its screen configuration automatically; groups remain available
+through the normal workspace bindings. The chosen mode survives Qtile restarts
+within the login session. External outputs must report connected to be restored.
+Keep the laptop lid open when using laptop-only mode.
