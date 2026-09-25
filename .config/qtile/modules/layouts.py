@@ -1,3 +1,5 @@
+import re
+
 from libqtile import layout
 from libqtile.config import Match
 
@@ -11,6 +13,7 @@ layouts = [
 floating_layout = layout.Floating(float_rules=[
     # Run the utility of `xprop` to see the wm class and name of an X client.
     *layout.Floating.default_float_rules,
+    Match(wm_class=re.compile(r"^copyq$", re.IGNORECASE)),
     Match(wm_class='confirmreset'),  # gitk
     Match(wm_class='makebranch'),  # gitk
     Match(wm_class='maketag'),  # gitk

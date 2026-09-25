@@ -16,6 +16,7 @@ run /usr/bin/blueman-applet
 run /usr/bin/nm-applet
 run /usr/bin/variety
 run /usr/bin/flameshot
+run /usr/bin/copyq
 # run /usr/bin/caffeine-indicator &
 # run /usr/bin/clight-gui &
 # run /usr/bin/spotify-tray &
@@ -27,7 +28,7 @@ eos-welcome &
 
 # Power Options owns hardware profiles; Xfce handles display/lid/idle policy.
 # Configure the system services as described in POWER.md before using both.
-run /usr/bin/power-options-tray
+# run /usr/bin/power-options-tray
 run /usr/bin/xfce4-power-manager
 
 # Configure lid suspend and start the lock-before-sleep listener.

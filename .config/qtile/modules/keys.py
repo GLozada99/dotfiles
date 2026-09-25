@@ -32,6 +32,7 @@ media_control = os.path.expanduser("~/.config/qtile/scripts/media-control.sh")
 power_action = os.path.expanduser("~/.config/qtile/scripts/power-action.sh")
 
 spawn = [
+    Key([Keys.MOD], "v", lazy.spawn("copyq toggle"), desc="Toggle clipboard history"),
     Key([Keys.MOD, "control"], "d",
         lazy.spawn([os.path.expanduser("~/.config/qtile/screen.sh"), "--toggle"]),
         desc="Toggle laptop-only / regular monitor layout"),
