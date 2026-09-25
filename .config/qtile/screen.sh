@@ -30,4 +30,4 @@ else
     setxkbmap -option compose:ralt
 fi
 
-brightnessctl set 19
+# Keep the brightness selected by the user/power manager across Qtile restarts.

@@ -1,4 +1,5 @@
 import os
+import shutil
 
 from libqtile import qtile
 from qtile_extras import widget
@@ -114,23 +115,58 @@ def _get_space():
     ]
 
 
+def _open_power_settings(command, package):
+    if shutil.which(command):
+        qtile.spawn(command)
+    else:
+        qtile.spawn([
+            "notify-send", "Power settings unavailable",
+            f"Install {package} to enable this settings window.",
+        ])
+
+
 def _get_volume_and_battery():
     return [
         widget.TextBox(
             text="", padding=0, fontsize=28, foreground=colors[0], background=colors[2]
         ),
-        # MyVolume(
-        #     fontsize=25,
-        #     font="JetBrains Mono Nerd Font",
-        #     foreground=colors[7],
-        #     background=colors[0],
-        #     mouse_callbacks={
-        #         "Button1": lambda: qtile.cmd_spawn("pavucontrol"),
-        #         "Button3": lambda: qtile.cmd_spawn(
-        #             "pactl set-sink-mute @DEFAULT_SINK@ toggle"
-        #         ),
-        #     },
-        # ),
+        widget.Battery(
+            battery="BAT0",
+            format="{char} {percent:2.0%} {hour:d}:{min:02d}",
+            full_short_text="Battery full",
+            empty_short_text="Battery empty",
+            charge_char="↑",
+            discharge_char="↓",
+            update_interval=30,
+            low_percentage=0.20,
+            low_foreground=colors[5],
+            foreground=colors[8],
+            background=colors[0],
+            padding=6,
+            mouse_callbacks={
+                "Button1": lambda: _open_power_settings(
+                    "power-options-gtk", "power-options-gtk"
+                ),
+                "Button3": lambda: _open_power_settings(
+                    "xfce4-power-manager-settings", "xfce4-power-manager"
+                ),
+            },
+        ),
+        widget.Backlight(
+            format="☀ {percent:2.0%}",
+            change_command="brightnessctl --class=backlight set {0}%",
+            step=5,
+            min_brightness=5,
+            update_interval=2,
+            foreground=colors[8],
+            background=colors[0],
+            padding=6,
+            mouse_callbacks={
+                "Button1": lambda: _open_power_settings(
+                    "xfce4-power-manager-settings", "xfce4-power-manager"
+                ),
+            },
+        ),
         widget.Sep(linewidth=0, padding=5, background=colors[0]),
     ]
 
