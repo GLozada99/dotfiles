@@ -7,6 +7,7 @@ export LC_ALL=C
 case "${1:-}" in
     volume-up) pactl set-sink-volume @DEFAULT_SINK@ +5% ;;
     volume-down) pactl set-sink-volume @DEFAULT_SINK@ -5% ;;
+    mic-mute) pactl set-source-mute @DEFAULT_SOURCE@ toggle ;;
     mute) pactl set-sink-mute @DEFAULT_SINK@ toggle ;;
     brightness-up) brightnessctl --class=backlight --min-value=1 set +5% >/dev/null ;;
     brightness-down) brightnessctl --class=backlight --min-value=1 set 5%- >/dev/null ;;
@@ -14,6 +15,18 @@ case "${1:-}" in
 esac
 
 case "$1" in
+    mic-mute)
+        if pactl get-source-mute @DEFAULT_SOURCE@ | grep -q 'yes'; then
+            title='Microphone muted'
+            icon=microphone-sensitivity-muted
+        else
+            title='Microphone unmuted'
+            icon=microphone-sensitivity-high
+        fi
+        dunstify -a qtile-osd -u low -t 1500 -i "$icon" \
+            -h string:x-dunst-stack-tag:qtile-microphone -h int:transient:1 "$title"
+        exit 0
+        ;;
     brightness-*)
         current=$(brightnessctl --class=backlight get)
         maximum=$(brightnessctl --class=backlight max)

@@ -99,6 +99,10 @@ keys = (
             lazy.spawn([media_control, "mute"]),
             desc="Toggle mute",
         ),
+        Key([Keys.MOD, "shift"], "m", lazy.spawn([media_control, "mic-mute"]),
+            desc="Toggle microphone mute"),
+        Key([], "XF86AudioMicMute", lazy.spawn([media_control, "mic-mute"]),
+            desc="Toggle microphone mute"),
         # External keyboard Fn+F1/F2 emit Launch5/Launch6 (verified with xev).
         Key([], "XF86Launch5", lazy.spawn([media_control, "brightness-down"]), desc="Decrease brightness"),
         Key([], "XF86Launch6", lazy.spawn([media_control, "brightness-up"]), desc="Increase brightness"),

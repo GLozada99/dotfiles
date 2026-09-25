@@ -1,5 +1,6 @@
 import os
 import shutil
+import subprocess
 
 from libqtile import qtile
 from qtile_extras import widget
@@ -125,10 +126,38 @@ def _open_power_settings(command, package):
         ])
 
 
+def _microphone_status():
+    try:
+        result = subprocess.run(
+            ["pactl", "get-source-mute", "@DEFAULT_SOURCE@"],
+            capture_output=True, text=True, timeout=2, check=True,
+            env={**os.environ, "LC_ALL": "C"},
+        )
+    except (OSError, subprocess.SubprocessError):
+        return "Mic: unavailable"
+    state = result.stdout.strip().split(":", 1)[-1].strip()
+    return {"yes": "Mic: muted", "no": "Mic: ready"}.get(state, "Mic: unavailable")
+
+
 def _get_volume_and_battery():
     return [
         widget.TextBox(
             text="", padding=0, fontsize=28, foreground=colors[0], background=colors[2]
+        ),
+        widget.GenPollText(
+            name="microphone",
+            func=_microphone_status,
+            update_interval=2,
+            foreground=colors[8],
+            background=colors[0],
+            padding=6,
+            mouse_callbacks={
+                "Button1": lambda: qtile.spawn([
+                    os.path.expanduser("~/.config/qtile/scripts/media-control.sh"),
+                    "mic-mute",
+                ]),
+                "Button3": lambda: qtile.spawn("pavucontrol --tab=4"),
+            },
         ),
         widget.Battery(
             battery="BAT0",

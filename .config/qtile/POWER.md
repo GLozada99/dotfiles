@@ -107,3 +107,12 @@ Qtile reloads its screen configuration automatically; groups remain available
 through the normal workspace bindings. The chosen mode survives Qtile restarts
 within the login session. External outputs must report connected to be restored.
 Keep the laptop lid open when using laptop-only mode.
+
+## Microphone indicator
+
+The bar shows `Mic: ready` (unmuted), `Mic: muted`, or `Mic: unavailable` for
+the default audio source, refreshed every two seconds. Ready does not mean an
+application is recording. Click to toggle mute; right-click opens input-device
+settings. Super+Shift+M and the dedicated microphone-mute key do the same.
+The toggle shows a brief Dunst notification. Applications explicitly using a
+different input device are not affected by muting the default microphone.
