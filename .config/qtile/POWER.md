@@ -80,15 +80,15 @@ A real lock/unlock and lid-close/resume cycle still needs to be checked manually
 ## Volume and brightness indicators
 
 Qtile's volume, mute and brightness keys use `scripts/media-control.sh` to show
-brief Dunst notifications with a percentage/progress bar. Repeated adjustments
+centered GTK overlays with symbolic icons and a percentage/progress bar. Repeated adjustments
 replace the previous notification. Volume and brightness change in 5% steps;
 muting shows an explicit muted state. Volume amplification above 100% is retained,
 with the visual progress bar capped at 100%. Notifications expire after 1.5 seconds.
 
 Qtile owns the brightness keys; autostart disables Xfce's duplicate key handler
 and brightness popup. Xfce still manages idle display policy. Restart Qtile with
-Super+Ctrl+R after changing the keybindings. The indicators require `dunstify`,
-`pactl`, `brightnessctl` and `flock` (already installed on this machine).
+Super+Ctrl+R after changing the keybindings. The indicators use the installed GTK 3/PyGObject/Cairo stack, `pactl`,
+`brightnessctl` and `flock`. Ordinary Dunst notifications are unchanged.
 
 Brightness uses the dedicated XF86MonBrightnessDown/Up key events (Fn plus
 the brightness keys in the current keyboard mode). Plain F1/F2 remain available
@@ -114,5 +114,12 @@ The bar shows `Mic: ready` (unmuted), `Mic: muted`, or `Mic: unavailable` for
 the default audio source, refreshed every two seconds. Ready does not mean an
 application is recording. Click to toggle mute; right-click opens input-device
 settings. Super+Shift+M and the dedicated microphone-mute key do the same.
-The toggle shows a brief Dunst notification. Applications explicitly using a
+The toggle shows a centered microphone icon with a muted/unmuted label. Applications explicitly using a
 different input device are not affected by muting the default microphone.
+
+
+The media overlay is centered on X11's primary monitor (currently eDP-1),
+rechecking the primary monitor on each update. It never takes keyboard focus,
+accepts no mouse input, and hides after 1.5 seconds. A single GTK application
+instance handles repeated updates. Its diagnostic log is in
+`$XDG_RUNTIME_DIR/qtile-media-osd.log`.

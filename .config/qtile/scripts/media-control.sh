@@ -23,9 +23,7 @@ case "$1" in
             title='Microphone unmuted'
             icon=microphone-sensitivity-high
         fi
-        dunstify -a qtile-osd -u low -t 1500 -i "$icon" \
-            -h string:x-dunst-stack-tag:qtile-microphone -h int:transient:1 "$title"
-        exit 0
+        value=-1
         ;;
     brightness-*)
         current=$(brightnessctl --class=backlight get)
@@ -33,11 +31,9 @@ case "$1" in
         value=$((100 * current / maximum))
         title="Brightness: $value%"
         icon=display-brightness
-        tag=qtile-brightness
         ;;
     *)
         value=$(pactl get-sink-volume @DEFAULT_SINK@ | awk 'NR == 1 {gsub(/%/, "", $5); print $5}')
-        tag=qtile-volume
         if pactl get-sink-mute @DEFAULT_SINK@ | grep -q 'yes'; then
             title='Volume: muted'
             icon=audio-volume-muted
@@ -48,8 +44,9 @@ case "$1" in
         fi
         ;;
 esac
-# Progress hints use 0..100 even if audio amplification exceeds 100%.
-[ "$value" -le 100 ] || value=100
-dunstify -a qtile-osd -u low -t 1500 -i "$icon" \
-    -h "string:x-dunst-stack-tag:$tag" -h "int:value:$value" \
-    -h int:transient:1 "$title"
+# Release the adjustment lock before starting the persistent single-instance OSD.
+flock -u 9
+exec 9>&-
+osd_script="$(dirname "$0")/media-osd.py"
+/usr/bin/python "$osd_script" "${icon}-symbolic" "$title" "$value" \
+    >>"${XDG_RUNTIME_DIR}/qtile-media-osd.log" 2>&1 &
